@@ -70,8 +70,8 @@ class HRRNumbers:
         if origin == 'mul':
             m0, m1 = m1, m0
         exp = np.exp(self.beta*np.einsum('ij,j->ij', m0, x.conj()).real)
-        weights = np.einsum('ij, j->ij', exp, 1/np.sum(exp, axis=0))
-        proj = np.sum(weights*m1, axis=0)
+        weights = np.einsum('ij,j->ij', exp, 1/np.sum(exp, axis=0))
+        proj = np.einsum('ij,ij->j', weights, m1)
         return proj
 
     def __call__(self, n:int):
